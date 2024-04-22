@@ -1,0 +1,16 @@
+<nav class="nav">
+  <a href="/" class="site-title">IITK-Mess</a>
+  <ul>
+    <li class="${path === '/orders' ? 'active' : ''}">
+      <form action="/views/Orders.ejs" method="get">
+        <a href="/Orders">Orders</a>
+      </form>
+    </li>
+
+    <li>
+      <form action="/auth/logout" method="get">
+        <button class="top" type="submit">Logout</button>
+      </form>
+    </li>
+  </ul>
+</nav>

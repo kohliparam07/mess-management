@@ -1,0 +1,69 @@
+<%- include("../partials/head") %>
+    <title>Complaints</title>
+    <%- include("../partials/head2") %>
+        <%- include("navbar") %>
+
+
+        <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="errorModalLabel">NOTE</h5>
+                        
+                    </div>
+                    <div class="modal-body">
+                        <p id="errorMessage"></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+            <div class="box" id="heading">
+                <h1> Complaints </h1>
+            </div>
+
+
+            <div class="box">
+                <% for (let i=0; i < complaints.length; i++) { %>
+                    <form action="/manager/complaints" method="post">
+                        <div class="item">
+                            <p>
+                            <table>
+                                <tr>
+                                    <td><b>Roll:</b></td>
+                                    <td class>
+                                        <%=complaints[i].rollNo%>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><b>Complaint:</b></td>
+                                    <td class="text">
+                                        <%=complaints[i].issue%>
+                                    </td>
+                                </tr>
+                            </table>
+                            </p>
+                        </div>
+                        <div class="item"><input type="text" style="width: 750px;" name="reply" placeholder="Reply"
+                                autocomplete="off" class="reply" maxlength="300">
+                            <button type="submit" class="add" name="button" value="<%=complaints[i]._id%>">Send</button>
+                        </div>
+                    </form>
+                    <% }%>
+
+                        <script>
+                            const flag = '<%=flag%>';
+                            if (flag == 1) {
+                                const message = "Reply sent.";
+                                const errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
+                                document.getElementById('errorMessage').textContent = message;
+                                errorModal.show();
+                            }
+                        </script>
+            </div>
+            </body>
+
+            </html>

@@ -1,0 +1,68 @@
+<%- include("../partials/head") %>
+<title>Mess Bill</title>
+<%- include("../partials/head2") %>
+    <%- include("navbar") %>
+
+        <div class="box" id="heading">
+            <h1> Bills </h1>
+        </div>
+
+        <div class="box">
+            <% for (let i=0; i < bills.length; i++) { %>
+                
+                    <div class="item">
+                        <p>
+                            
+                        <table>
+                            <tr>
+                                <td><b>From:</b></td>
+
+                                <td>
+                                    <%=bills[i].startDate%>
+                                </td>
+                                <td><b>To:</b></td>
+                                <td>
+                                    <%=bills[i].endDate%>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><b>Working Days:</b></td>
+                                <td>
+                                    <%=bills[i].workingDays%>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td><b>Rebate Days:</b></td>
+                                <td>
+                                    <%=bills[i].rebateDays%>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><b>Daily Cost:</b></td>
+                                <td>
+                                    ₹<%=bills[i].dailyCost%>/-
+                                </td>
+
+                                <td><b>Extras Cost:</b></td>
+                                <td>
+                                    ₹<%=bills[i].extrasCost%>/-
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><b>Total:</b></td>
+                                <td>
+                                    ₹<%=bills[i].total%>/-
+                                </td>
+                            </tr>
+                        </table>
+                        </p>
+
+
+                    </div>
+                
+                <% }%>
+        </div>
+        </body>
+
+        </html>

@@ -1,0 +1,75 @@
+<%- include("../partials/head") %>
+  <title>Orders</title>
+  <%- include("../partials/head2") %>
+    <%- include("navbar") %>
+
+      <div class="box" id="heading">
+        <h1> My Orders </h1>
+      </div>
+
+      <div class="box">
+        <% for (let i=0; i < orders.length; i++) { %>
+          <div class="item">
+            <p>
+            <table>
+              <% for (let j=0; j < orders[i].itemName.length; j++) { %>
+
+                <tr>
+                  
+                  <td><b>Name:</b></td>
+                  <td>
+                    <%=orders[i].itemName[j]%>
+                  </td>
+
+
+                  <td><b>Price: </b></td>
+                  <td>₹<%=orders[i].price[j]%>/-
+                  </td>
+
+
+                  <td><b>Quantity:</b></td>
+                  <td>
+                    <%=orders[i].quantity[j]%>
+                  </td>
+
+                  <td><b>Status:</b></td>
+                  <td>
+                    <%=orders[i].status[j]%>
+                  </td>
+
+                  <td><b>Code:</b></td>
+                  <td>
+                    <%=orders[i].code[j]%>
+                  </td>
+
+
+                </tr>
+
+
+                <% }%>
+                  <tr>
+                    
+                    <td><b>Total: </b></td>
+                    <td>₹<%=orders[i].total%>/-
+                    </td>
+                  </tr>
+            </table>
+            </p>
+          </div>
+
+          <% }%>
+            <script>
+              const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+              checkboxes.forEach(function (checkbox) {
+                checkbox.addEventListener('click', function () {
+                  if (checkbox.checked) {
+                    showDialog(); // Show the dialog box
+                    checkbox.checked = false; // Uncheck the checkbox
+                  }
+                });
+              });
+            </script>
+
+            </body>
+
+            </html>

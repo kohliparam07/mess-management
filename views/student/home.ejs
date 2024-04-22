@@ -1,0 +1,49 @@
+<%- include("../partials/head") %>
+<title>Home</title>
+<%- include("../partials/head2") %>
+    <%- include("navbar") %>
+
+        <div class="card">
+            <p>
+            <table>
+                <tr>
+                    <td><b>Name</b></td>
+                    <td><b>:</b></td>
+                    <td>
+                        <%=student.name%>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><b>RollNo</b></td>
+                    <td><b>:</b></td>
+                    <td>
+                        <%=student.rollNumber%>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><b>Extras</b></td>
+                    <td><b>:</b></td>
+                    <td>
+                        ₹<%=student.extrasCost%>/-
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><b>Dues</b></td>
+                    <td><b>:</b></td>
+                    <td>
+                        ₹<%=student.dues%>/-
+                    </td>
+                </tr>
+
+
+            </table>
+            </p>
+
+        </div>
+
+        </body>
+
+        </html>

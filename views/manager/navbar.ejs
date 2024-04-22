@@ -1,0 +1,37 @@
+<nav class="nav">
+    <a href="/" class="site-title">IITK-Mess</a>
+    <ul>
+        <li class="${path === '/orders' ? 'active' : ''}">
+            <form action="/views/Orders.ejs" method="get">
+                <a href="order">Orders</a>
+            </form>
+        </li>
+        <li>
+            <form action="/views/Complain.ejs" method="get">
+                <a href="complaints">Complaints</a>
+            </form>
+
+        </li>
+        <li class="${path === '/rebate' ? 'active' : ''}">
+            <a href="rebateApproval">Rebate Approval</a>
+        </li>
+        <li class="${path === '/mess-menu' ? 'active' : ''}">
+            <a href="messMenu">Mess Menu</a>
+        </li>
+        <li class="${path === '/extras' ? 'active' : ''}">
+            <a href="extras">Extras</a>
+        </li>
+        <li class="${path === '/mess-bill' ? 'active' : ''}">
+            <form method="get">
+
+                <a href="accessAccount">Access Account</a>
+            </form>
+        </li>
+        <li>
+            <form action="/auth/logout" method="get">
+                <button class="top" type="submit">Logout</button>
+
+            </form>
+        </li>
+    </ul>
+</nav>

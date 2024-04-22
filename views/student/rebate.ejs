@@ -1,0 +1,176 @@
+<%- include("../partials/head") %>
+  <title>Apply for Rebate</title>
+  <%- include("../partials/head2") %>
+    <%- include("../student/navbar") %>
+      <!-- Example of a Bootstrap modal that displays an error message -->
+
+      <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="errorModalLabel">NOTE</h5>
+            </div>
+            <div class="modal-body">
+              <p id="errorMessage"></p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="card" id="card1">
+            <h3>Active rebate</h3>
+
+            <div class="mb-3">
+              <label for="startingDate" class="form-label"><b>Starting date</b></label>
+              <input id="startingDate" class="form-control" value="<%= student.startingDate %>">
+              <label for="endingDate" class="form-label"><b>Ending Date</b></label>
+              <input id="endingDate" class="form-control" value="<%= student.endingDate %>">
+
+
+              <label for="Status" class="form-label"><b>Status</b></label>
+              <input id="Status" class="form-control" value="<%=student.rebateStatus%>">
+
+              <% if( student.rebateStatus=="pending" || (new Date().getTime() < new Date(student.startingDate).getTime() && student.rebateStatus=="Approved")) {%>
+                <form action="/student/rebatewithdraw" method="post">
+                  <button type="submit" class="btn btn-primary mt-3">Withdaw</button>
+                </form>
+                <% } %>
+            </div>
+
+
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card" id="card2">
+            <h3>Request rebate</h3>
+
+            <form action="/rebate" method="post">
+              <div class="mb-3">
+                
+                <label for="startingDate2" class="form-label"><b>Starting date</b></label>
+                <input type="date" id="startingDate2" class="form-control" name="startDate" required>
+
+                <label for="endingDate2" class="form-label"><b>Ending Date</b></label>
+                <input type="date" id="endingDate2" class="form-control" name="endDate" required>
+                <br><br><br>
+                <button type="submit" class="btn btn-primary mt-3">Request</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+      <script>
+        $(document).ready(function () {
+          // Get the heights of the two cards
+          var card1Height = $('#card1').height();
+          var card2Height = $('#card2').height();
+
+          // Determine the maximum height
+          var maxHeight = Math.max(card1Height, card2Height);
+
+          // Set the height of both cards to the maximum height
+          $('#card1').height(maxHeight);
+          $('#card2').height(maxHeight);
+        });
+      </script>
+
+      <script>
+        const flag = '<%= flag %>';
+
+        if (flag == 1) {
+          const message = "There already exists an active rebate request withdraw it first to be able to request again";
+          const errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
+          document.getElementById('errorMessage').textContent = message;
+          errorModal.show();
+        }
+        else if (flag == 2) {
+          const message = "Please note that once your rebate request has been approved and your starting date of request has passed, you will no longer be able to withdraw your request. Additionally, you will not be able to submit a new request until the ending date has passed, unless you withdraw your previous request.";
+          const errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
+          document.getElementById('errorMessage').textContent = message;
+          errorModal.show();
+        } else if (flag == 3) {
+          const message = "Starting Date cannot be greater than Ending Date";
+          const errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
+          document.getElementById('errorMessage').textContent = message;
+          errorModal.show();
+        } else if (flag == 4) {
+          const message = "The active rebate request has been withdrawn. You can now make a new request.";
+          const errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
+          document.getElementById('errorMessage').textContent = message;
+          errorModal.show();
+        } 
+        var startInput = document.getElementById("startingDate");
+        startInput.addEventListener("keydown", function (event) {
+          event.preventDefault();
+        });
+        var statusInput = document.getElementById("Status");
+        statusInput.addEventListener("keydown", function (event) {
+          event.preventDefault();
+        });
+        var endInput = document.getElementById("endingDate");
+        endInput.addEventListener("keydown", function (event) {
+          event.preventDefault();
+        });
+        var startInput2 = document.getElementById("startingDate2");
+        startInput2.addEventListener("keydown", function (event) {
+          event.preventDefault();
+        });
+        var endInput2 = document.getElementById("endingDate2");
+        endInput2.addEventListener("keydown", function (event) {
+          event.preventDefault();
+        });
+        var today = new Date();
+        today.setDate(today.getDate() + 1);
+        var tomorrow = today.toISOString().split('T')[0];
+        document.getElementById("startingDate2").setAttribute('min', tomorrow);
+        document.getElementById("endingDate2").setAttribute('min', tomorrow);
+
+      </script>
+      </form>
+      </div>
+      <div class="box" id="heading">
+        <h1> Past Rebate requests </h1>
+      </div>
+
+      <div class="box">
+        <% for (let i=0; i < rebates.length; i++) { %>
+          <form class="item" action="/rebate/remove" method="post">
+            <p>
+            <table>
+              <tr>
+                <td><b>From:</b></td>
+
+                <td>
+                  <%=rebates[i].startDate%>
+
+                </td>
+                <td><b>To:</b></td>
+                <td>
+                  <%=rebates[i].endDate%>
+                </td>
+              </tr>
+              <tr>
+                <td><b>Days:</b></td>
+                <td>
+                  <%=rebates[i].days%>
+
+                </td>
+                <td><b>Status:</b></td>
+                <td>
+                  <%=rebates[i].status%>
+                </td>
+              </tr>
+            </table>
+            </p>
+          </form>
+          <% }%>
+      </div>
+      </body>
+
+      </html>

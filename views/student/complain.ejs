@@ -1,0 +1,97 @@
+<%- include("../partials/head") %>
+    <title>Complain</title>
+    <%- include("../partials/head2") %>
+        <%- include("navbar") %>
+
+
+            <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="errorModalLabel">NOTE</h5>
+                        </div>
+                        <div class="modal-body">
+                            <p id="errorMessage"></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <form action="/complain" method="post">
+                <div className="mb-3">
+                    <label for="exampleFormControlTextarea1" class="form-label mt-3"><b>Type Your Complaint
+                            Below</b></label>
+                    <textarea type="text" class="form-control" id="exampleFormControlTextarea1" rows="3" name="text"
+                        maxlength="300"></textarea>
+                    <button type="submit" class="btn btn-primary mt-3" id="complain">Submit</button>
+                </div>
+            </form>
+
+            <div class="box" id="heading">
+                <h1> My Complaints </h1>
+            </div>
+
+            <div class="box">
+                <% for (let i=0; i < complaints.length; i++) { %>
+                    <form class="item" action="/complain/remove" method="post">
+                        <button type="submit" class="remove" name="button" value="<%=complaints[i]._id%>">X</button>
+                        <table>
+                            <p>
+                                <tr>
+                                    <td><b>Complaint:</b></td>
+                                    <td class="text">
+                                        <%=complaints[i].issue%>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><b>Reply:</b></td>
+                                    <td class="text">
+                                        <%=complaints[i].reply%>
+                                    </td>
+                                </tr>
+                            </p>
+                        </table>
+                    </form>
+                    <% }%>
+            </div>
+            <script>
+                const flag = '<%=flag%>';
+                if (flag == 1) {
+                    const message = "Compaint deleted .";
+                    const errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
+                    document.getElementById('errorMessage').textContent = message;
+                    errorModal.show();
+                }
+                if (flag == 2) {
+                    const message = "Compaint sent .";
+                    const errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
+                    document.getElementById('errorMessage').textContent = message;
+                    errorModal.show();
+                }
+                if (flag == 3) {
+                    const message = "Invalid Compaint .";
+                    const errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
+                    document.getElementById('errorMessage').textContent = message;
+                    errorModal.show();
+                }
+                const tabs = document.querySelectorAll('.tab_btn');
+                const all_content = document.querySelectorAll('.content');
+                tabs.forEach((tab, index) => {
+                    tab.addEventListener('click', () => {
+                        tabs.forEach(tab => { tab.classList.remove('active') });
+                        tab.classList.add('active');
+                        //     var line=document.querySelector('.line');
+                        // line.style.width=e.target.offsetWidth+"px";
+                        // line.style.left=e.target.offsetLeft+"px";
+                        all_content.forEach(context => { context.classList.remove('active') })
+                        all_content[index].classList.add('active');
+                    })
+                })
+            </script>
+
+            </body>
+
+            </html>

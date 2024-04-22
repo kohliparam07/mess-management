@@ -1,0 +1,1367 @@
+<%- include("../partials/head") %>
+  <title>Mess Menu</title>
+  <%- include("../partials/head2") %>
+    <%- include("navbar") %>
+
+      <style>
+        * {
+          margin: 0;
+          padding: 0;
+          font-family: 'Poppins', sans-serif;
+        }
+
+        .column {
+          float: left;
+          width: 33.33%;
+          padding: 0 10px;
+        }
+
+        /* Remove extra left and right margins, due to padding in columns */
+        .row {
+          margin: 0 -5px;
+        }
+
+        /* Clear floats after the columns */
+        .row:after {
+          content: "";
+          display: table;
+          clear: both;
+        }
+
+        /* Style the counter cards */
+        .menuCard {
+          box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+          /* this adds the "menuCard" effect */
+          padding: 16px;
+          text-align: center;
+          background-color: #f1f1f1;
+        }
+
+        /* Responsive columns - one column layout (vertical) on small screens */
+        @media screen and (max-width: 600px) {
+          .column {
+            width: 100%;
+            display: block;
+            margin-bottom: 20px;
+          }
+        }
+
+        .body {
+          background-color: #deeeff;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+        }
+
+        .container {
+          margin: auto;
+          width: 120%;
+          background-color: white;
+          padding: 30px;
+          box-shadow: 0 2px 16px rgba(0, 0, 0, .1);
+          border-radius: 40px;
+        }
+
+        .tab_box {
+          width: 100%;
+          display: flex;
+          justify-content: space-around;
+          align-items: center;
+          border-bottom: 2px solid rgba(229, 229, 229);
+          position: relative;
+        }
+
+        .tab_box .tab_btn {
+          font-size: 18px;
+          font-weight: 600;
+          color: #919191;
+          background: none;
+          border: none;
+          padding: 18px;
+          cursor: pointer;
+        }
+
+        .content_box {
+          padding: 20px;
+        }
+
+        .content_box .content {
+          display: none;
+        }
+
+        .content_box .content.active {
+          display: block;
+        }
+
+        .content_box .content h2 {
+          margin-bottom: 10px;
+        }
+
+        .tab_box .tab_btn.active {
+          color: dodgerblue;
+        }
+
+
+        .card-title {
+          text-align: left;
+          padding-bottom: 10px;
+          word-break: break-all;
+        }
+
+        .table-grid {
+          display: grid;
+          grid-template-rows: repeat(0, 1fr);
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .grid-item {
+          padding: 10px;
+          align-items: center;
+          margin-left: 0;
+        }
+
+        .grid-item:nth-child(1) {
+          grid-row: 1;
+          grid-column: 1;
+        }
+
+        .grid-item:nth-child(2) {
+          grid-row: 1;
+          grid-column: 2;
+        }
+
+        .grid-item:nth-child(3) {
+          grid-row: 2;
+          grid-column: 1;
+        }
+
+        .grid-item:nth-child(4) {
+          grid-row: 2;
+          grid-column: 2;
+        }
+
+        .grid-item:nth-child(5) {
+          grid-row: 3;
+          grid-column: 1;
+        }
+      </style>
+      </head>
+      </head>
+
+      <body>
+
+        <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="errorModalLabel">NOTE</h5>
+                
+              </div>
+              <div class="modal-body">
+                <p id="errorMessage"></p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <h2 style="text-align: center;color:#fff">Mess-Menu</h2>
+        <div class="container">
+          <div class="tab_box">
+            <button class="tab_btn">Monday</button>
+            <button class="tab_btn">Tuesday</button>
+            <button class="tab_btn">Wednesday</button>
+            <button class="tab_btn">Thursday</button>
+            <button class="tab_btn">Friday</button>
+            <button class="tab_btn">Saturday</button>
+            <button class="tab_btn">Sunday</button>
+            <div class="line"></div>
+          </div>
+          <div></div>
+          <div class="content_box">
+
+            <div class="content active">
+              <h2>Monday Menu</h2>
+              <div class="row">
+                <div class="column">
+                  <div class="menuCard ">
+                    <h3>
+                      Breakfast
+                    </h3>
+                    <h4 class="card-title ">Regular:</h4>
+                    <form action="/manager/messMenu/remove" method="post">
+                      <div class="table-grid ">
+                        <% for (let i=0; i < mob.length; i++) { %>
+
+                          <div class="grid-item text">
+                            <b style="font-size: larger;">
+                              <%=mob[i].name%>
+                            </b>
+                          </div>
+
+                          <div class="grid-item"><button type="submit" style="background-color: #f1f1f1;" class="remove"
+                              name="button" value="<%=mob[i]._id%>">Remove</button>
+                          </div>
+                          <% }%>
+                      </div>
+                    </form>
+                    <form action="/manager/messMenu/add" method="post">
+                      <input type="text" style="box-shadow:none;" class="messMenu" name="name" placeholder="Name"
+                        maxlength="40" autocomplete="off">
+                      <button type="submit" style="background-color: #f1f1f1;" class="add" name="code"
+                        value="110">Add</button>
+                    </form>
+                    <h4 class="card-title">Extras:</h4>
+                    <form action="/manager/messMenu/remove" method="post">
+                      <div class="table-grid ">
+                        <% for (let i=0; i < mobe.length; i++) { %>
+
+                          <div class="grid-item text">
+                            <b style="font-size: larger;">
+                              <%=mobe[i].name%>
+                            </b>
+                          </div>
+
+                          <div class="grid-item"><button type="submit" style="background-color: #f1f1f1;" class="remove"
+                              name="button" value="<%=mobe[i]._id%>">Remove</button>
+                          </div>
+                          <% }%>
+                      </div>
+                    </form>
+                    <form action="/manager/messMenu/add" method="post">
+                      <input type="text" style="box-shadow:none;" class="messMenu" name="name" placeholder="Name"
+                        maxlength="40" autocomplete="off">
+                      <button type="submit" style="background-color: #f1f1f1;" class="add" name="code"
+                        value="111">Add</button>
+                    </form>
+                  </div>
+                </div>
+                <div class="column">
+                  <div class="menuCard">
+                    <h3>Lunch</h3>
+                    <h4 class="card-title">Regular:</h4>
+                    <form action="/manager/messMenu/remove" method="post">
+                      <div class="table-grid ">
+                        <% for (let i=0; i < mol.length; i++) { %>
+
+                          <div class="grid-item text">
+                            <b style="font-size: larger;">
+                              <%=mol[i].name%>
+                            </b>
+                          </div>
+
+                          <div class="grid-item"><button type="submit" style="background-color: #f1f1f1;" class="remove"
+                              name="button" value="<%=mol[i]._id%>">Remove</button>
+                          </div>
+                          <% }%>
+                      </div>
+                    </form>
+                    <form action="/manager/messMenu/add" method="post">
+                      <input type="text" style="box-shadow:none;" class="messMenu" name="name" placeholder="Name"
+                        maxlength="40" autocomplete="off">
+                      <button type="submit" style="background-color: #f1f1f1;" class="add" name="code"
+                        value="120">Add</button>
+                    </form>
+                    <h4 class="card-title">Extras:</h4>
+                    <form action="/manager/messMenu/remove" method="post">
+                      <div class="table-grid ">
+                        <% for (let i=0; i < mole.length; i++) { %>
+
+                          <div class="grid-item text">
+                            <b style="font-size: larger;">
+                              <%=mole[i].name%>
+                            </b>
+                          </div>
+
+                          <div class="grid-item"><button type="submit" style="background-color: #f1f1f1;" class="remove"
+                              name="button" value="<%=mole[i]._id%>">Remove</button>
+                          </div>
+                          <% }%>
+                      </div>
+                    </form>
+                    <form action="/manager/messMenu/add" method="post">
+                      <input type="text" style="box-shadow:none;" class="messMenu" name="name" placeholder="Name"
+                        maxlength="40" autocomplete="off">
+                      <button type="submit" style="background-color: #f1f1f1;" class="add" name="code"
+                        value="121">Add</button>
+                    </form>
+                  </div>
+                </div>
+                <div class="column">
+                  <div class="menuCard">
+                    <h3>Dinner</h3>
+                    <h4 class="card-title">Regular:</h4>
+                    <form action="/manager/messMenu/remove" method="post">
+                      <div class="table-grid ">
+                        <% for (let i=0; i < mod.length; i++) { %>
+
+                          <div class="grid-item text">
+                            <b style="font-size: larger;">
+                              <%=mod[i].name%>
+                            </b>
+                          </div>
+
+                          <div class="grid-item"><button type="submit" style="background-color: #f1f1f1;" class="remove"
+                              name="button" value="<%=mod[i]._id%>">Remove</button>
+                          </div>
+                          <% }%>
+                      </div>
+                    </form>
+                    <form action="/manager/messMenu/add" method="post">
+                      <input type="text" style="box-shadow:none;" class="messMenu" name="name" placeholder="Name"
+                        maxlength="40" autocomplete="off">
+                      <button type="submit" style="background-color: #f1f1f1;" class="add" name="code"
+                        value="130">Add</button>
+                    </form>
+                    <h4 class="card-title">Extras:</h4>
+                    <form action="/manager/messMenu/remove" method="post">
+                      <div class="table-grid ">
+                        <% for (let i=0; i < mode.length; i++) { %>
+
+                          <div class="grid-item text">
+                            <b style="font-size: larger;">
+                              <%=mode[i].name%>
+                            </b>
+                          </div>
+
+                          <div class="grid-item"><button type="submit" style="background-color: #f1f1f1;" class="remove"
+                              name="button" value="<%=mode[i]._id%>">Remove</button>
+                          </div>
+                          <% }%>
+                      </div>
+                    </form>
+                    <form action="/manager/messMenu/add" method="post">
+                      <input type="text" style="box-shadow:none;" class="messMenu" name="name" placeholder="Name"
+                        maxlength="40" autocomplete="off">
+                      <button type="submit" style="background-color: #f1f1f1;" class="add" name="code"
+                        value="131">Add</button>
+                    </form>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+            <div class="content">
+              <h2>Tuesday Menu</h2>
+
+              <div class="row">
+                <div class="column">
+                  <div class="menuCard">
+                    <h3>
+                      Breakfast
+                    </h3>
+                    <h4 class="card-title">Regular:</h4>
+                    <form action="/manager/messMenu/remove" method="post">
+                      <div class="table-grid">
+                        <% for (let i=0; i < tub.length; i++) { %>
+
+                          <div class="grid-item text">
+                            <b style="font-size: larger;">
+                              <%=tub[i].name%>
+                            </b>
+                          </div>
+
+                          <div class="grid-item"><button type="submit" style="background-color: #f1f1f1;" class="remove"
+                              name="button" value="<%=tub[i]._id%>">Remove</button>
+                          </div>
+                          <% }%>
+                      </div>
+                    </form>
+                    <form action="/manager/messMenu/add" method="post">
+                      <input type="text" style="box-shadow:none;" class="messMenu" name="name" placeholder="Name"
+                        maxlength="40" autocomplete="off">
+                      <button type="submit" style="background-color: #f1f1f1;" class="add" name="code"
+                        value="210">Add</button>
+                    </form>
+                    <h4 class="card-title">Extras:</h4>
+                    <form action="/manager/messMenu/remove" method="post">
+                      <div class="table-grid">
+                        <% for (let i=0; i < tube.length; i++) { %>
+
+                          <div class="grid-item text">
+                            <b style="font-size: larger;">
+                              <%=tube[i].name%>
+                            </b>
+                          </div>
+
+                          <div class="grid-item"><button type="submit" style="background-color: #f1f1f1;" class="remove"
+                              name="button" value="<%=tube[i]._id%>">Remove</button>
+                          </div>
+                          <% }%>
+                      </div>
+                    </form>
+                    <form action="/manager/messMenu/add" method="post">
+                      <input type="text" style="box-shadow:none;" class="messMenu" name="name" placeholder="Name"
+                        maxlength="40" autocomplete="off">
+                      <button type="submit" style="background-color: #f1f1f1;" class="add" name="code"
+                        value="211">Add</button>
+                    </form>
+                  </div>
+                </div>
+                <div class="column">
+                  <div class="menuCard">
+                    <h3>Lunch</h3>
+                    <h4 class="card-title">Regular:</h4>
+                    <form action="/manager/messMenu/remove" method="post">
+                      <div class="table-grid">
+                        <% for (let i=0; i < tul.length; i++) { %>
+
+                          <div class="grid-item text">
+                            <b style="font-size: larger;">
+                              <%=tul[i].name%>
+                            </b>
+                          </div>
+
+                          <div class="grid-item"><button type="submit" style="background-color: #f1f1f1;" class="remove"
+                              name="button" value="<%=tul[i]._id%>">Remove</button>
+                          </div>
+                          <% }%>
+                      </div>
+                    </form>
+                    <form action="/manager/messMenu/add" method="post">
+                      <input type="text" style="box-shadow:none;" class="messMenu" name="name" placeholder="Name"
+                        maxlength="40" autocomplete="off">
+                      <button type="submit" style="background-color: #f1f1f1;" class="add" name="code"
+                        value="220">Add</button>
+                    </form>
+                    <h4 class="card-title">Extras:</h4>
+                    <form action="/manager/messMenu/remove" method="post">
+                      <div class="table-grid">
+                        <% for (let i=0; i < tule.length; i++) { %>
+
+                          <div class="grid-item text">
+                            <b style="font-size: larger;">
+                              <%=tule[i].name%>
+                            </b>
+                          </div>
+
+                          <div class="grid-item"><button type="submit" style="background-color: #f1f1f1;" class="remove"
+                              name="button" value="<%=tule[i]._id%>">Remove</button>
+                          </div>
+                          <% }%>
+                      </div>
+                    </form>
+                    <form action="/manager/messMenu/add" method="post">
+                      <input type="text" style="box-shadow:none;" class="messMenu" name="name" placeholder="Name"
+                        maxlength="40" autocomplete="off">
+                      <button type="submit" style="background-color: #f1f1f1;" class="add" name="code"
+                        value="221">Add</button>
+                    </form>
+                  </div>
+                </div>
+                <div class="column">
+                  <div class="menuCard">
+                    <h3>Dinner</h3>
+                    <h4 class="card-title">Regular:</h4>
+                    <form action="/manager/messMenu/remove" method="post">
+                      <div class="table-grid">
+                        <% for (let i=0; i < tud.length; i++) { %>
+
+                          <div class="grid-item text">
+                            <b style="font-size: larger;">
+                              <%=tud[i].name%>
+                            </b>
+                          </div>
+
+                          <div class="grid-item"><button type="submit" style="background-color: #f1f1f1;" class="remove"
+                              name="button" value="<%=tud[i]._id%>">Remove</button>
+                          </div>
+                          <% }%>
+                      </div>
+                    </form>
+                    <form action="/manager/messMenu/add" method="post">
+                      <input type="text" style="box-shadow:none;" class="messMenu" name="name" placeholder="Name"
+                        maxlength="40" autocomplete="off">
+                      <button type="submit" style="background-color: #f1f1f1;" class="add" name="code"
+                        value="230">Add</button>
+                    </form>
+                    <h4 class="card-title">Extras:</h4>
+                    <form action="/manager/messMenu/remove" method="post">
+                      <div class="table-grid">
+                        <% for (let i=0; i < tude.length; i++) { %>
+
+                          <div class="grid-item text">
+                            <b style="font-size: larger;">
+                              <%=tude[i].name%>
+                            </b>
+                          </div>
+
+                          <div class="grid-item"><button type="submit" style="background-color: #f1f1f1;" class="remove"
+                              name="button" value="<%=tude[i]._id%>">Remove</button>
+                          </div>
+                          <% }%>
+                      </div>
+                    </form>
+                    <form action="/manager/messMenu/add" method="post">
+                      <input type="text" style="box-shadow:none;" class="messMenu" name="name" placeholder="Name"
+                        maxlength="40" autocomplete="off">
+                      <button type="submit" style="background-color: #f1f1f1;" class="add" name="code"
+                        value="231">Add</button>
+                    </form>
+                  </div>
+                </div>
+
+              </div>
+
+
+            </div>
+            <div class="content">
+              <h2>Wednesday Menu</h2>
+
+              <div class="row">
+                <div class="column">
+                  <div class="menuCard">
+                    <h3>
+                      Breakfast
+                    </h3>
+                    <h4 class="card-title">Regular:</h4>
+                    <form action="/manager/messMenu/remove" method="post">
+                      <div class="table-grid">
+                        <% for (let i=0; i < web.length; i++) { %>
+
+                          <div class="grid-item text">
+                            <b style="font-size: larger;">
+                              <%=web[i].name%>
+                            </b>
+                          </div>
+
+                          <div class="grid-item"><button type="submit" style="background-color: #f1f1f1;" class="remove"
+                              name="button" value="<%=web[i]._id%>">Remove</button>
+                          </div>
+                          <% }%>
+                      </div>
+                    </form>
+                    <form action="/manager/messMenu/add" method="post">
+                      <input type="text" style="box-shadow:none;" class="messMenu" name="name" placeholder="Name"
+                        maxlength="40" autocomplete="off">
+                      <button type="submit" style="background-color: #f1f1f1;" class="add" name="code"
+                        value="310">Add</button>
+                    </form>
+                    <h4 class="card-title">Extras:</h4>
+                    <form action="/manager/messMenu/remove" method="post">
+                      <div class="table-grid">
+                        <% for (let i=0; i < webe.length; i++) { %>
+
+                          <div class="grid-item text">
+                            <b style="font-size: larger;">
+                              <%=webe[i].name%>
+                            </b>
+                          </div>
+
+                          <div class="grid-item"><button type="submit" style="background-color: #f1f1f1;" class="remove"
+                              name="button" value="<%=webe[i]._id%>">Remove</button>
+                          </div>
+                          <% }%>
+                      </div>
+                    </form>
+                    <form action="/manager/messMenu/add" method="post">
+                      <input type="text" style="box-shadow:none;" class="messMenu" name="name" placeholder="Name"
+                        maxlength="40" autocomplete="off">
+                      <button type="submit" style="background-color: #f1f1f1;" class="add" name="code"
+                        value="311">Add</button>
+                    </form>
+                  </div>
+                </div>
+                <div class="column">
+                  <div class="menuCard">
+                    <h3>Lunch</h3>
+                    <h4 class="card-title">Regular:</h4>
+                    <form action="/manager/messMenu/remove" method="post">
+                      <div class="table-grid">
+                        <% for (let i=0; i < wel.length; i++) { %>
+
+                          <div class="grid-item text">
+                            <b style="font-size: larger;">
+                              <%=wel[i].name%>
+                            </b>
+                          </div>
+
+                          <div class="grid-item"><button type="submit" style="background-color: #f1f1f1;" class="remove"
+                              name="button" value="<%=wel[i]._id%>">Remove</button>
+                          </div>
+                          <% }%>
+                      </div>
+                    </form>
+                    <form action="/manager/messMenu/add" method="post">
+                      <input type="text" style="box-shadow:none;" class="messMenu" name="name" placeholder="Name"
+                        maxlength="40" autocomplete="off">
+                      <button type="submit" style="background-color: #f1f1f1;" class="add" name="code"
+                        value="320">Add</button>
+                    </form>
+                    <h4 class="card-title">Extras:</h4>
+                    <form action="/manager/messMenu/remove" method="post">
+                      <div class="table-grid">
+                        <% for (let i=0; i < wele.length; i++) { %>
+
+                          <div class="grid-item text">
+                            <b style="font-size: larger;">
+                              <%=wele[i].name%>
+                            </b>
+                          </div>
+
+                          <div class="grid-item"><button type="submit" style="background-color: #f1f1f1;" class="remove"
+                              name="button" value="<%=wele[i]._id%>">Remove</button>
+                          </div>
+                          <% }%>
+                      </div>
+                    </form>
+                    <form action="/manager/messMenu/add" method="post">
+                      <input type="text" style="box-shadow:none;" class="messMenu" name="name" placeholder="Name"
+                        maxlength="40" autocomplete="off">
+                      <button type="submit" style="background-color: #f1f1f1;" class="add" name="code"
+                        value="321">Add</button>
+                    </form>
+                  </div>
+                </div>
+                <div class="column">
+                  <div class="menuCard">
+                    <h3>Dinner</h3>
+                    <h4 class="card-title">Regular:</h4>
+                    <form action="/manager/messMenu/remove" method="post">
+                      <div class="table-grid">
+                        <% for (let i=0; i < wed.length; i++) { %>
+
+                          <div class="grid-item text">
+                            <b style="font-size: larger;">
+                              <%=wed[i].name%>
+                            </b>
+                          </div>
+
+                          <div class="grid-item"><button type="submit" style="background-color: #f1f1f1;" class="remove"
+                              name="button" value="<%=wed[i]._id%>">Remove</button>
+                          </div>
+                          <% }%>
+                      </div>
+                    </form>
+                    <form action="/manager/messMenu/add" method="post">
+                      <input type="text" style="box-shadow:none;" class="messMenu" name="name" placeholder="Name"
+                        maxlength="40" autocomplete="off">
+                      <button type="submit" style="background-color: #f1f1f1;" class="add" name="code"
+                        value="330">Add</button>
+                    </form>
+                    <h4 class="card-title">Extras:</h4>
+                    <form action="/manager/messMenu/remove" method="post">
+                      <div class="table-grid">
+                        <% for (let i=0; i < wede.length; i++) { %>
+
+                          <div class="grid-item text">
+                            <b style="font-size: larger;">
+                              <%=wede[i].name%>
+                            </b>
+                          </div>
+
+                          <div class="grid-item"><button type="submit" style="background-color: #f1f1f1;" class="remove"
+                              name="button" value="<%=wede[i]._id%>">Remove</button>
+                          </div>
+                          <% }%>
+                      </div>
+                    </form>
+                    <form action="/manager/messMenu/add" method="post">
+                      <input type="text" style="box-shadow:none;" class="messMenu" name="name" placeholder="Name"
+                        maxlength="40" autocomplete="off">
+                      <button type="submit" style="background-color: #f1f1f1;" class="add" name="code"
+                        value="331">Add</button>
+                    </form>
+                  </div>
+                </div>
+
+              </div>
+
+
+            </div>
+            <div class="content">
+              <h2>Thursday Menu</h2>
+
+              <div class="row">
+                <div class="column">
+                  <div class="menuCard">
+                    <h3>
+                      Breakfast
+                    </h3>
+                    <h4 class="card-title">Regular:</h4>
+                    <form action="/manager/messMenu/remove" method="post">
+                      <div class="table-grid">
+                        <% for (let i=0; i < thb.length; i++) { %>
+
+                          <div class="grid-item text">
+                            <b style="font-size: larger;">
+                              <%=thb[i].name%>
+                            </b>
+                          </div>
+
+                          <div class="grid-item"><button type="submit" style="background-color: #f1f1f1;" class="remove"
+                              name="button" value="<%=thb[i]._id%>">Remove</button>
+                          </div>
+                          <% }%>
+                      </div>
+                    </form>
+                    <form action="/manager/messMenu/add" method="post">
+                      <input type="text" style="box-shadow:none;" class="messMenu" name="name" placeholder="Name"
+                        maxlength="40" autocomplete="off">
+                      <button type="submit" style="background-color: #f1f1f1;" class="add" name="code"
+                        value="410">Add</button>
+                    </form>
+                    <h4 class="card-title">Extras:</h4>
+                    <form action="/manager/messMenu/remove" method="post">
+                      <div class="table-grid">
+                        <% for (let i=0; i < thbe.length; i++) { %>
+
+                          <div class="grid-item text">
+                            <b style="font-size: larger;">
+                              <%=thbe[i].name%>
+                            </b>
+                          </div>
+
+                          <div class="grid-item"><button type="submit" style="background-color: #f1f1f1;" class="remove"
+                              name="button" value="<%=thbe[i]._id%>">Remove</button>
+                          </div>
+                          <% }%>
+                      </div>
+                    </form>
+                    <form action="/manager/messMenu/add" method="post">
+                      <input type="text" style="box-shadow:none;" class="messMenu" name="name" placeholder="Name"
+                        maxlength="40" autocomplete="off">
+                      <button type="submit" style="background-color: #f1f1f1;" class="add" name="code"
+                        value="411">Add</button>
+                    </form>
+                  </div>
+                </div>
+                <div class="column">
+                  <div class="menuCard">
+                    <h3>Lunch</h3>
+                    <h4 class="card-title">Regular:</h4>
+                    <form action="/manager/messMenu/remove" method="post">
+                      <div class="table-grid">
+                        <% for (let i=0; i < thl.length; i++) { %>
+
+                          <div class="grid-item text">
+                            <b style="font-size: larger;">
+                              <%=thl[i].name%>
+                            </b>
+                          </div>
+
+                          <div class="grid-item"><button type="submit" style="background-color: #f1f1f1;" class="remove"
+                              name="button" value="<%=thl[i]._id%>">Remove</button>
+                          </div>
+                          <% }%>
+                      </div>
+                    </form>
+                    <form action="/manager/messMenu/add" method="post">
+                      <input type="text" style="box-shadow:none;" class="messMenu" name="name" placeholder="Name"
+                        maxlength="40" autocomplete="off">
+                      <button type="submit" style="background-color: #f1f1f1;" class="add" name="code"
+                        value="420">Add</button>
+                    </form>
+                    <h4 class="card-title">Extras:</h4>
+                    <form action="/manager/messMenu/remove" method="post">
+                      <div class="table-grid">
+                        <% for (let i=0; i < thle.length; i++) { %>
+
+                          <div class="grid-item text">
+                            <b style="font-size: larger;">
+                              <%=thle[i].name%>
+                            </b>
+                          </div>
+
+                          <div class="grid-item"><button type="submit" style="background-color: #f1f1f1;" class="remove"
+                              name="button" value="<%=thle[i]._id%>">Remove</button>
+                          </div>
+                          <% }%>
+                      </div>
+                    </form>
+                    <form action="/manager/messMenu/add" method="post">
+                      <input type="text" style="box-shadow:none;" class="messMenu" name="name" placeholder="Name"
+                        maxlength="40" autocomplete="off">
+                      <button type="submit" style="background-color: #f1f1f1;" class="add" name="code"
+                        value="421">Add</button>
+                    </form>
+                  </div>
+                </div>
+                <div class="column">
+                  <div class="menuCard">
+                    <h3>Dinner</h3>
+                    <h4 class="card-title">Regular:</h4>
+                    <form action="/manager/messMenu/remove" method="post">
+                      <div class="table-grid">
+                        <% for (let i=0; i < thd.length; i++) { %>
+
+                          <div class="grid-item text">
+                            <b style="font-size: larger;">
+                              <%=thd[i].name%>
+                            </b>
+                          </div>
+
+                          <div class="grid-item"><button type="submit" style="background-color: #f1f1f1;" class="remove"
+                              name="button" value="<%=thd[i]._id%>">Remove</button>
+                          </div>
+                          <% }%>
+                      </div>
+                    </form>
+                    <form action="/manager/messMenu/add" method="post">
+                      <input type="text" style="box-shadow:none;" class="messMenu" name="name" placeholder="Name"
+                        maxlength="40" autocomplete="off">
+                      <button type="submit" style="background-color: #f1f1f1;" class="add" name="code"
+                        value="430">Add</button>
+                    </form>
+                    <h4 class="card-title">Extras:</h4>
+                    <form action="/manager/messMenu/remove" method="post">
+                      <div class="table-grid text">
+                        <% for (let i=0; i < thde.length; i++) { %>
+
+                          <div class="grid-item">
+                            <b style="font-size: larger;">
+                              <%=thde[i].name%>
+                            </b>
+                          </div>
+
+                          <div class="grid-item"><button type="submit" style="background-color: #f1f1f1;" class="remove"
+                              name="button" value="<%=thde[i]._id%>">Remove</button>
+                          </div>
+                          <% }%>
+                      </div>
+                    </form>
+                    <form action="/manager/messMenu/add" method="post">
+                      <input type="text" style="box-shadow:none;" class="messMenu" name="name" placeholder="Name"
+                        maxlength="40" autocomplete="off">
+                      <button type="submit" style="background-color: #f1f1f1;" class="add" name="code"
+                        value="431">Add</button>
+                    </form>
+                  </div>
+                </div>
+
+              </div>
+
+
+            </div>
+            <div class="content">
+              <h2>Friday Menu</h2>
+
+              <div class="row">
+                <div class="column">
+                  <div class="menuCard">
+                    <h3>
+                      Breakfast
+                    </h3>
+                    <h4 class="card-title">Regular:</h4>
+                    <form action="/manager/messMenu/remove" method="post">
+                      <div class="table-grid">
+                        <% for (let i=0; i < frb.length; i++) { %>
+
+                          <div class="grid-item text">
+                            <b style="font-size: larger;">
+                              <%=frb[i].name%>
+                            </b>
+                          </div>
+
+                          <div class="grid-item"><button type="submit" style="background-color: #f1f1f1;" class="remove"
+                              name="button" value="<%=frb[i]._id%>">Remove</button>
+                          </div>
+                          <% }%>
+                      </div>
+                    </form>
+                    <form action="/manager/messMenu/add" method="post">
+                      <input type="text" style="box-shadow:none;" class="messMenu" name="name" placeholder="Name"
+                        maxlength="40" autocomplete="off">
+                      <button type="submit" style="background-color: #f1f1f1;" class="add" name="code"
+                        value="510">Add</button>
+                    </form>
+                    <h4 class="card-title">Extras:</h4>
+                    <form action="/manager/messMenu/remove" method="post">
+                      <div class="table-grid">
+                        <% for (let i=0; i < frbe.length; i++) { %>
+
+                          <div class="grid-item text">
+                            <b style="font-size: larger;">
+                              <%=frbe[i].name%>
+                            </b>
+                          </div>
+
+                          <div class="grid-item"><button type="submit" style="background-color: #f1f1f1;" class="remove"
+                              name="button" value="<%=frbe[i]._id%>">Remove</button>
+                          </div>
+                          <% }%>
+                      </div>
+                    </form>
+                    <form action="/manager/messMenu/add" method="post">
+                      <input type="text" style="box-shadow:none;" class="messMenu" name="name" placeholder="Name"
+                        maxlength="40" autocomplete="off">
+                      <button type="submit" style="background-color: #f1f1f1;" class="add" name="code"
+                        value="511">Add</button>
+                    </form>
+                  </div>
+                </div>
+                <div class="column">
+                  <div class="menuCard">
+                    <h3>Lunch</h3>
+                    <h4 class="card-title">Regular:</h4>
+                    <form action="/manager/messMenu/remove" method="post">
+                      <div class="table-grid">
+                        <% for (let i=0; i < frl.length; i++) { %>
+
+                          <div class="grid-item text">
+                            <b style="font-size: larger;">
+                              <%=frl[i].name%>
+                            </b>
+                          </div>
+
+                          <div class="grid-item"><button type="submit" style="background-color: #f1f1f1;" class="remove"
+                              name="button" value="<%=frl[i]._id%>">Remove</button>
+                          </div>
+                          <% }%>
+                      </div>
+                    </form>
+                    <form action="/manager/messMenu/add" method="post">
+                      <input type="text" style="box-shadow:none;" class="messMenu" name="name" placeholder="Name"
+                        maxlength="40" autocomplete="off">
+                      <button type="submit" style="background-color: #f1f1f1;" class="add" name="code"
+                        value="520">Add</button>
+                    </form>
+                    <h4 class="card-title">Extras:</h4>
+                    <form action="/manager/messMenu/remove" method="post">
+                      <div class="table-grid">
+                        <% for (let i=0; i < frle.length; i++) { %>
+
+                          <div class="grid-item text">
+                            <b style="font-size: larger;">
+                              <%=frle[i].name%>
+                            </b>
+                          </div>
+
+                          <div class="grid-item"><button type="submit" style="background-color: #f1f1f1;" class="remove"
+                              name="button" value="<%=frle[i]._id%>">Remove</button>
+                          </div>
+                          <% }%>
+                      </div>
+                    </form>
+                    <form action="/manager/messMenu/add" method="post">
+                      <input type="text" style="box-shadow:none;" class="messMenu" name="name" placeholder="Name"
+                        maxlength="40" autocomplete="off">
+                      <button type="submit" style="background-color: #f1f1f1;" class="add" name="code"
+                        value="521">Add</button>
+                    </form>
+                  </div>
+                </div>
+                <div class="column">
+                  <div class="menuCard">
+                    <h3>Dinner</h3>
+                    <h4 class="card-title">Regular:</h4>
+                    <form action="/manager/messMenu/remove" method="post">
+                      <div class="table-grid">
+                        <% for (let i=0; i < frd.length; i++) { %>
+
+                          <div class="grid-item text">
+                            <b style="font-size: larger;">
+                              <%=frd[i].name%>
+                            </b>
+                          </div>
+
+                          <div class="grid-item"><button type="submit" style="background-color: #f1f1f1;" class="remove"
+                              name="button" value="<%=frd[i]._id%>">Remove</button>
+                          </div>
+                          <% }%>
+                      </div>
+                    </form>
+                    <form action="/manager/messMenu/add" method="post">
+                      <input type="text" style="box-shadow:none;" class="messMenu" name="name" placeholder="Name"
+                        maxlength="40" autocomplete="off">
+                      <button type="submit" style="background-color: #f1f1f1;" class="add" name="code"
+                        value="530">Add</button>
+                    </form>
+                    <h4 class="card-title">Extras:</h4>
+                    <form action="/manager/messMenu/remove" method="post">
+                      <div class="table-grid">
+                        <% for (let i=0; i < frde.length; i++) { %>
+
+                          <div class="grid-item text">
+                            <b style="font-size: larger;">
+                              <%=frde[i].name%>
+                            </b>
+                          </div>
+
+                          <div class="grid-item"><button type="submit" style="background-color: #f1f1f1;" class="remove"
+                              name="button" value="<%=frde[i]._id%>">Remove</button>
+                          </div>
+                          <% }%>
+                      </div>
+                    </form>
+                    <form action="/manager/messMenu/add" method="post">
+                      <input type="text" style="box-shadow:none;" class="messMenu" name="name" placeholder="Name"
+                        maxlength="40" autocomplete="off">
+                      <button type="submit" style="background-color: #f1f1f1;" class="add" name="code"
+                        value="531">Add</button>
+                    </form>
+                  </div>
+                </div>
+
+              </div>
+
+
+            </div>
+            <div class="content">
+              <h2>Saturday Menu</h2>
+
+              <div class="row">
+                <div class="column">
+                  <div class="menuCard">
+                    <h3>
+                      Breakfast
+                    </h3>
+                    <h4 class="card-title">Regular:</h4>
+                    <form action="/manager/messMenu/remove" method="post">
+                      <div class="table-grid">
+                        <% for (let i=0; i < sab.length; i++) { %>
+
+                          <div class="grid-item text">
+                            <b style="font-size: larger;">
+                              <%=sab[i].name%>
+                            </b>
+                          </div>
+
+                          <div class="grid-item"><button type="submit" style="background-color: #f1f1f1;" class="remove"
+                              name="button" value="<%=sab[i]._id%>">Remove</button>
+                          </div>
+                          <% }%>
+                      </div>
+                    </form>
+                    <form action="/manager/messMenu/add" method="post">
+                      <input type="text" style="box-shadow:none;" class="messMenu" name="name" placeholder="Name"
+                        maxlength="40" autocomplete="off">
+                      <button type="submit" style="background-color: #f1f1f1;" class="add" name="code"
+                        value="610">Add</button>
+                    </form>
+                    <h4 class="card-title">Extras:</h4>
+                    <form action="/manager/messMenu/remove" method="post">
+                      <div class="table-grid">
+                        <% for (let i=0; i < sabe.length; i++) { %>
+
+                          <div class="grid-item text">
+                            <b style="font-size: larger;">
+                              <%=sabe[i].name%>
+                            </b>
+                          </div>
+
+                          <div class="grid-item"><button type="submit" style="background-color: #f1f1f1;" class="remove"
+                              name="button" value="<%=sabe[i]._id%>">Remove</button>
+                          </div>
+                          <% }%>
+                      </div>
+                    </form>
+                    <form action="/manager/messMenu/add" method="post">
+                      <input type="text" style="box-shadow:none;" class="messMenu" name="name" placeholder="Name"
+                        maxlength="40" autocomplete="off">
+                      <button type="submit" style="background-color: #f1f1f1;" class="add" name="code"
+                        value="611">Add</button>
+                    </form>
+                  </div>
+                </div>
+                <div class="column">
+                  <div class="menuCard">
+                    <h3>Lunch</h3>
+                    <h4 class="card-title">Regular:</h4>
+                    <form action="/manager/messMenu/remove" method="post">
+                      <div class="table-grid">
+                        <% for (let i=0; i < sal.length; i++) { %>
+
+                          <div class="grid-item text">
+                            <b style="font-size: larger;">
+                              <%=sal[i].name%>
+                            </b>
+                          </div>
+
+                          <div class="grid-item"><button type="submit" style="background-color: #f1f1f1;" class="remove"
+                              name="button" value="<%=sal[i]._id%>">Remove</button>
+                          </div>
+                          <% }%>
+                      </div>
+                    </form>
+                    <form action="/manager/messMenu/add" method="post">
+                      <input type="text" style="box-shadow:none;" class="messMenu" name="name" placeholder="Name"
+                        maxlength="40" autocomplete="off">
+                      <button type="submit" style="background-color: #f1f1f1;" class="add" name="code"
+                        value="620">Add</button>
+                    </form>
+                    <h4 class="card-title">Extras:</h4>
+                    <form action="/manager/messMenu/remove" method="post">
+                      <div class="table-grid">
+                        <% for (let i=0; i < sale.length; i++) { %>
+
+                          <div class="grid-item text">
+                            <b style="font-size: larger;">
+                              <%=sale[i].name%>
+                            </b>
+                          </div>
+
+                          <div class="grid-item"><button type="submit" style="background-color: #f1f1f1;" class="remove"
+                              name="button" value="<%=sale[i]._id%>">Remove</button>
+                          </div>
+                          <% }%>
+                      </div>
+                    </form>
+                    <form action="/manager/messMenu/add" method="post">
+                      <input type="text" style="box-shadow:none;" class="messMenu" name="name" placeholder="Name"
+                        maxlength="40" autocomplete="off">
+                      <button type="submit" style="background-color: #f1f1f1;" class="add" name="code"
+                        value="621">Add</button>
+                    </form>
+                  </div>
+                </div>
+                <div class="column">
+                  <div class="menuCard">
+                    <h3>Dinner</h3>
+                    <h4 class="card-title">Regular:</h4>
+                    <form action="/manager/messMenu/remove" method="post">
+                      <div class="table-grid">
+                        <% for (let i=0; i < sad.length; i++) { %>
+
+                          <div class="grid-item text">
+                            <b style="font-size: larger;">
+                              <%=sad[i].name%>
+                            </b>
+                          </div>
+
+                          <div class="grid-item"><button type="submit" style="background-color: #f1f1f1;" class="remove"
+                              name="button" value="<%=sad[i]._id%>">Remove</button>
+                          </div>
+                          <% }%>
+                      </div>
+                    </form>
+                    <form action="/manager/messMenu/add" method="post">
+                      <input type="text" style="box-shadow:none;" class="messMenu" name="name" placeholder="Name"
+                        maxlength="40" autocomplete="off">
+                      <button type="submit" style="background-color: #f1f1f1;" class="add" name="code"
+                        value="630">Add</button>
+                    </form>
+                    <h4 class="card-title">Extras:</h4>
+                    <form action="/manager/messMenu/remove" method="post">
+                      <div class="table-grid">
+                        <% for (let i=0; i < sade.length; i++) { %>
+
+                          <div class="grid-item text">
+                            <b style="font-size: larger;">
+                              <%=sade[i].name%>
+                            </b>
+                          </div>
+
+                          <div class="grid-item"><button type="submit" style="background-color: #f1f1f1;" class="remove"
+                              name="button" value="<%=sade[i]._id%>">Remove</button>
+                          </div>
+                          <% }%>
+                      </div>
+                    </form>
+                    <form action="/manager/messMenu/add" method="post">
+                      <input type="text" style="box-shadow:none;" class="messMenu" name="name" placeholder="Name"
+                        maxlength="40" autocomplete="off">
+                      <button type="submit" style="background-color: #f1f1f1;" class="add" name="code"
+                        value="631">Add</button>
+                    </form>
+                  </div>
+                </div>
+
+              </div>
+
+
+            </div>
+            <div class="content">
+              <h2>Sunday Menu</h2>
+
+              <div class="row">
+                <div class="column">
+                  <div class="menuCard">
+                    <h3>
+                      Breakfast
+                    </h3>
+                    <h4 class="card-title">Regular:</h4>
+                    <form action="/manager/messMenu/remove" method="post">
+                      <div class="table-grid">
+                        <% for (let i=0; i < sub.length; i++) { %>
+
+                          <div class="grid-item text">
+                            <b style="font-size: larger;">
+                              <%=sub[i].name%>
+                            </b>
+                          </div>
+
+                          <div class="grid-item"><button type="submit" style="background-color: #f1f1f1;" class="remove"
+                              name="button" value="<%=sub[i]._id%>">Remove</button>
+                          </div>
+                          <% }%>
+                      </div>
+                    </form>
+                    <form action="/manager/messMenu/add" method="post">
+                      <input type="text" style="box-shadow:none;" class="messMenu" name="name" placeholder="Name"
+                        maxlength="40" autocomplete="off">
+                      <button type="submit" style="background-color: #f1f1f1;" class="add" name="code"
+                        value="710">Add</button>
+                    </form>
+                    <h4 class="card-title">Extras:</h4>
+                    <form action="/manager/messMenu/remove" method="post">
+                      <div class="table-grid">
+                        <% for (let i=0; i < sube.length; i++) { %>
+
+                          <div class="grid-item text">
+                            <b style="font-size: larger;">
+                              <%=sube[i].name%>
+                            </b>
+                          </div>
+
+                          <div class="grid-item"><button type="submit" style="background-color: #f1f1f1;" class="remove"
+                              name="button" value="<%=sube[i]._id%>">Remove</button>
+                          </div>
+                          <% }%>
+                      </div>
+                    </form>
+                    <form action="/manager/messMenu/add" method="post">
+                      <input type="text" style="box-shadow:none;" class="messMenu" name="name" placeholder="Name"
+                        maxlength="40" autocomplete="off">
+                      <button type="submit" style="background-color: #f1f1f1;" class="add" name="code"
+                        value="711">Add</button>
+                    </form>
+                  </div>
+                </div>
+                <div class="column">
+                  <div class="menuCard">
+                    <h3>Lunch</h3>
+                    <h4 class="card-title">Regular:</h4>
+                    <form action="/manager/messMenu/remove" method="post">
+                      <div class="table-grid">
+                        <% for (let i=0; i < sul.length; i++) { %>
+
+                          <div class="grid-item text">
+                            <b style="font-size: larger;">
+                              <%=sul[i].name%>
+                            </b>
+                          </div>
+
+                          <div class="grid-item"><button type="submit" style="background-color: #f1f1f1;" class="remove"
+                              name="button" value="<%=sul[i]._id%>">Remove</button>
+                          </div>
+                          <% }%>
+                      </div>
+                    </form>
+                    <form action="/manager/messMenu/add" method="post">
+                      <input type="text" style="box-shadow:none;" class="messMenu" name="name" placeholder="Name"
+                        maxlength="40" autocomplete="off">
+                      <button type="submit" style="background-color: #f1f1f1;" class="add" name="code"
+                        value="720">Add</button>
+                    </form>
+                    <h4 class="card-title">Extras:</h4>
+                    <form action="/manager/messMenu/remove" method="post">
+                      <div class="table-grid">
+                        <% for (let i=0; i < sule.length; i++) { %>
+
+                          <div class="grid-item text">
+                            <b style="font-size: larger;">
+                              <%=sule[i].name%>
+                            </b>
+                          </div>
+
+                          <div class="grid-item"><button type="submit" style="background-color: #f1f1f1;" class="remove"
+                              name="button" value="<%=sule[i]._id%>">Remove</button>
+                          </div>
+                          <% }%>
+                      </div>
+                    </form>
+                    <form action="/manager/messMenu/add" method="post">
+                      <input type="text" style="box-shadow:none;" class="messMenu" name="name" placeholder="Name"
+                        maxlength="40" autocomplete="off">
+                      <button type="submit" style="background-color: #f1f1f1;" class="add" name="code"
+                        value="721">Add</button>
+                    </form>
+                  </div>
+                </div>
+                <div class="column">
+                  <div class="menuCard">
+                    <h3>Dinner</h3>
+                    <h4 class="card-title">Regular:</h4>
+                    <form action="/manager/messMenu/remove" method="post">
+                      <div class="table-grid">
+                        <% for (let i=0; i < sud.length; i++) { %>
+
+                          <div class="grid-item text">
+                            <b style="font-size: larger;">
+                              <%=sud[i].name%>
+                            </b>
+                          </div>
+
+                          <div class="grid-item"><button type="submit" style="background-color: #f1f1f1;" class="remove"
+                              name="button" value="<%=sud[i]._id%>">Remove</button>
+                          </div>
+                          <% }%>
+                      </div>
+                    </form>
+                    <form action="/manager/messMenu/add" method="post">
+                      <input type="text" style="box-shadow:none;" class="messMenu" name="name" placeholder="Name"
+                        maxlength="40" autocomplete="off">
+                      <button type="submit" style="background-color: #f1f1f1;" class="add" name="code"
+                        value="730">Add</button>
+                    </form>
+                    <h4 class="card-title">Extras:</h4>
+                    <form action="/manager/messMenu/remove" method="post">
+                      <div class="table-grid">
+                        <% for (let i=0; i < sude.length; i++) { %>
+
+                          <div class="grid-item text">
+                            <b style="font-size: larger;">
+                              <%=sude[i].name%>
+                            </b>
+                          </div>
+
+                          <div class="grid-item"><button type="submit" style="background-color: #f1f1f1;" class="remove"
+                              name="button" value="<%=sude[i]._id%>">Remove</button>
+                          </div>
+                          <% }%>
+                      </div>
+                    </form>
+                    <form action="/manager/messMenu/add" method="post">
+                      <input type="text" style="box-shadow:none;" class="messMenu" name="name" placeholder="Name"
+                        maxlength="40" autocomplete="off">
+                      <button type="submit" style="background-color: #f1f1f1;" class="add" name="code"
+                        value="731">Add</button>
+                    </form>
+                  </div>
+                </div>
+
+              </div>
+
+
+            </div>
+          </div>
+        </div>
+
+        <script>
+          
+          const flag = '<%= flag %>';
+            if (flag == 1) {
+              const message = "Item has been added successfully";
+              const errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
+              document.getElementById('errorMessage').textContent = message;
+              errorModal.show();
+            }
+            else if (flag ==2){
+              const message = "Item has been removed successfully";
+              const errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
+              document.getElementById('errorMessage').textContent = message;
+              errorModal.show();
+            }
+          const tabs = document.querySelectorAll('.tab_btn');
+          const all_content = document.querySelectorAll('.content');
+          tabs.forEach((tab, index) => {
+            tab.addEventListener('click', () => {
+              tabs.forEach(tab => { tab.classList.remove('active') });
+              tab.classList.add('active');
+
+              all_content.forEach(context => { context.classList.remove('active') })
+              all_content[index].classList.add('active');
+            })
+
+
+          })
+        </script>
+
+      </body>
+
+      </html>

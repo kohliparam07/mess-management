@@ -1,0 +1,52 @@
+<%- include("../partials/head") %>
+<title>Rebate Approval</title>
+<%- include("../partials/head2") %>
+    <%- include("navbar") %>
+
+        <div class="box" id="heading">
+            <h1> Rebate requests </h1>
+        </div>
+
+        <div class="box">
+            <% for (let i=0; i < rebates.length; i++) { %>
+
+
+                <div class="item">
+                    <form action="/manager/rebateApproval/approved" method="post">
+                        <button type="submit" class="add" name="button" value="<%=rebates[i]._id%>">✓</button>
+                    </form>
+                    <form action="/manager/rebateApproval/rejected" method="post">
+                        <button type="submit" class="remove" name="button" value="<%=rebates[i]._id%>">X</button>
+                    </form>
+                    <p>
+                    <table>
+                        <tr>
+                            <td><b>Roll:</b></td>
+                            <td>
+                                <%=rebates[i].rollNo%>
+                            </td>
+                            <td><b>No. of days:</b></td>
+                            <td>
+                                <%=rebates[i].days%>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>From:</b></td>
+                            <td>
+                                <%=rebates[i].startDate%>
+                            </td>
+                            <td><b>To:</b></td>
+                            <td>
+                                <%=rebates[i].endDate%>
+                            </td>
+                        </tr>
+                    </table>
+                    </p>
+
+
+                </div>
+                <% }%>
+        </div>
+        </body>
+
+        </html>

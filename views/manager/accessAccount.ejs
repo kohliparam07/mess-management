@@ -1,0 +1,208 @@
+<%- include("../partials/head") %>
+    <title>Access Account</title>
+    <%- include("../partials/head2") %>
+        <%- include("navbar") %>
+
+            <!-- Example of a Bootstrap modal that displays an error message -->
+
+            <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="errorModalLabel">NOTE</h5>
+                        </div>
+                        <div class="modal-body">
+                            <p id="errorMessage"></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+
+            <div class="row" style="margin:auto">
+                <div class="col d-flex">
+                    <div class="card flex-fill ">
+                        <form action="/manager/accessAccount" method="post">
+                            <div class="mb-3">
+                                <br>
+                                <h2>Generate Bill</h2><br>
+                                <label for="startingDate" class="form-label"><b>Starting date</b></label>
+                                <input type="date" id="startingDate" class="form-control" name="startDate" required>
+                                <label for="endingDate" class="form-label"><b>Ending Date</b></label>
+                                <input type="date" id="endingDate" class="form-control" name="endDate" required>
+                                <label for="dailyCost" class="form-label"><b>Daily Cost</b></label>
+                                <input id="dailyCost" class="form-control" name="dailyCost" min="1" max="150" required>
+                                <button type="submit" class="btn btn-primary mt-3">Generate</button>
+                            </div>
+                            <script>
+                                const flag = '<%= flag %>';
+                                if (flag == 1) {
+                                    const message = "Attention! It appears that there may have been some billing activity between the dates you provided. Please review the generated bills below for any discrepancies or unexpected charges.";
+                                    const errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
+                                    document.getElementById('errorMessage').textContent = message;
+                                    errorModal.show();
+                                }
+                                else if (flag == 2) {
+                                    const message = "Starting Date cannot be greater than Ending Date" ;
+                                    const errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
+                                    document.getElementById('errorMessage').textContent = message;
+                                    errorModal.show();
+                                }
+                                else if (flag == 3) {
+                                    const message = "Bill has been generated" ;
+                                    const errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
+                                    document.getElementById('errorMessage').textContent = message;
+                                    errorModal.show();
+                                }
+                                else if(flag == 4){
+                                    const message = "account has been updated" ;
+                                    const errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
+                                    document.getElementById('errorMessage').textContent = message;
+                                    errorModal.show();
+                                }
+                                else if(flag == 5){
+                                    const message = "User not found" ;
+                                    const errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
+                                    document.getElementById('errorMessage').textContent = message;
+                                    errorModal.show();
+                                }
+                                else if(flag == 6){
+                                    const message = "Please enter new dues and new extras dues in the Update Account section to update this account." ;
+                                    const errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
+                                    document.getElementById('errorMessage').textContent = message;
+                                    errorModal.show();
+                                }
+
+                                var startInput = document.getElementById("startingDate");
+
+                                // Disable keyboard input
+                                startInput.addEventListener("keydown", function (event) {
+                                    event.preventDefault();
+                                });
+                                var endInput = document.getElementById("endingDate");
+
+                                // Disable keyboard input
+                                endInput.addEventListener("keydown", function (event) {
+                                    event.preventDefault();
+                                });
+                                var today = new Date();
+                                today.setDate(today.getDate() + 1);
+                                var tomorrow = today.toISOString().split('T')[0];
+                                document.getElementById("startingDate").setAttribute('max', tomorrow);
+                                document.getElementById("endingDate").setAttribute('max', tomorrow);
+                            </script>
+                        </form>
+                    </div>
+                </div>
+                <div class="col d-flex">
+                    <div class="card flex-fill">
+                        <br>
+                        <h2>Find Account</h2>
+                        <br>
+                        <div class="mb-3">
+                            <form action="/manager/accessAccount/find" method="post">
+                                <label for="rollNumber1" class="form-label"><b>Roll Number</b></label>
+                                <input name="rollNumber" type="number" id="rollNumber1" class="form-control"
+                                    min="100001" max="99999999" value="<%=session.currentRollNumber%>"required>
+                                <label for="currentDues" class="form-label"><b>Current Dues</b></label>
+                                <input id="currentDues" class="form-control" value=<%=parseInt(session.currentDues)%>>
+                                <label for="currentExtras" class="form-label"><b>Current Extras</b></label>
+                                <input id="currentExtras" class="form-control" value="<%=session.currentExtras%>">
+                                <button type="submit" class="btn btn-primary mt-3">Find</button>
+
+                                <script>
+                                    var Input = document.getElementById("currentDues");
+                                    // Disable keyboard input
+                                    Input.addEventListener("keydown", function (event) {
+                                        event.preventDefault();
+                                    });
+                                    Input = document.getElementById("currentExtras");
+                                    // Disable keyboard input
+                                    Input.addEventListener("keydown", function (event) {
+                                        event.preventDefault();
+                                    });
+                                </script>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col d-flex">
+                    <div class="card flex-fill">
+                        <br>
+                        <h2>Update Account</h2><br>
+                        <form action="/manager/accessAccount/update" method="post">
+                            <div class="mb-3">
+                                <label for="rollNumber2" class="form-label"><b>Roll Number</b></label>
+                                <input  name="rollNumber" id="rollNumber2" class="form-control"
+                                    min="100001" max="99999999"  value="<%=session.currentRollNumber%>">
+                                <label for="newDues" class="form-label"><b>New Dues</b></label>
+                                <input type="number" name="newDues" id="newDues" class="form-control" value="<%=session.currentDues%>" required
+                                    min="0" max="100000">
+                                <label for="newExtras" class="form-label"><b>New Extras</b></label>
+                                <input type="number" name="newExtras" id="newExtras" class="form-control" value="<%=session.currentExtras%>"
+                                    required min="0" max="50000">
+                                <button type="submit" class="btn btn-primary mt-3">Update</button>
+                            </div>
+                            <script>
+                                var Input = document.getElementById("rollNumber2");
+                                // Disable keyboard input
+                                Input.addEventListener("keydown", function (event) {
+                                    event.preventDefault();
+                                });
+                            </script>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="box" id="heading">
+                <h1> Generated Bills </h1>
+            </div>
+
+            <div class="box">
+                <% for (let i=0; i < pastBills.length; i++) { %>
+                    
+                        <div class="item">
+                            <p>
+                                
+                            <table>
+                                <tr>
+                                    <td><b>From:</b></td>
+    
+                                    <td>
+                                        <%=pastBills[i].startDate%>
+                                    </td>
+                                    <td><b>To:</b></td>
+                                    <td>
+                                        <%=pastBills[i].endDate%>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><b>Working Days:</b></td>
+                                    <td>
+                                        <%=pastBills[i].workingDays%>
+                                    </td>
+                                    <td><b>Daily Cost:</b></td>
+                                    <td>
+                                        ₹<%=pastBills[i].dailyCost%>/-
+                                    </td>
+    
+                                    
+                                </tr>
+                                
+                            </table>
+                            </p>
+    
+    
+                        </div>
+                    
+                    <% }%>
+            </div>
+            </body>
+
+            </html>

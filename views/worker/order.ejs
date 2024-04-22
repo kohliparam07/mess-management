@@ -1,0 +1,169 @@
+<%- include("../partials/head") %>
+    <title>Orders</title>
+    <%- include("../partials/head2") %>
+        <%- include("navbar") %>
+
+            <div class="modal" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form action="/code" method="post">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="errorModalLabel">CODE VERIFICATION</h5>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <input name="code" class="form-control" id="inputMessage"
+                                        placeholder="Please enter code" autocomplete="off"/>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                    Close
+                                </button>
+                                <button type="submit" name="email" class="btn btn-primary" id="submitBtn" value="">
+                                    Submit
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="errorModal2" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="errorModalLabel">NOTE</h5>
+                        </div>
+                        <div class="modal-body">
+                            <h5 id="errorMessage"></h5>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="box" id="heading">
+                <h1> Orders </h1>
+            </div>
+
+            <div class="box">
+
+                <% for (let i=0; i < orders.length; i++) { %>
+
+
+                    <div class="item">
+
+
+                        <table>
+                            <tr>
+                                <td> </td>
+                                <td><b>Roll: </b></td>
+                                <td>
+                                    <%=orders[i].rollNo%>
+                                </td>
+
+                            </tr>
+
+
+
+
+                            <% for (let j=0; j < orders[i].itemName.length; j++) { %>
+
+                                <tr>
+                                    <td>
+                                        <% if(orders[i].status[j]=="pending" ) { %>
+                                            <form action="/manager/order" method="post" id="ordersForm">
+                                                <input name="orderId" value="<%=orders[i]._id%>" type="checkbox"
+                                                    id="checkBox"
+                                                    onchange="document.getElementById('ordersForm').submit()" unchecked>
+                                                <input type="hidden" value=<%=j%> name="index">
+                                            </form>
+
+                                            <%}%>
+                                    </td>
+                                    <td><b>Name:</b></td>
+                                    <td>
+                                        <%=orders[i].itemName[j]%>
+                                    </td>
+
+
+                                    <td><b>Price: </b></td>
+                                    <td>₹<%=orders[i].price[j]%>/-
+                                    </td>
+
+
+                                    <td><b>Quantity:</b></td>
+                                    <td>
+                                        <%=orders[i].quantity[j]%>
+                                    </td>
+
+                                    <td><b>Status:</b></td>
+                                    <td>
+                                        <%=orders[i].status[j]%>
+                                    </td>
+
+                                </tr>
+
+                                <% }%>
+                                    <tr>
+                                        <td> </td>
+                                        <td><b>Total: </b></td>
+                                        <td>₹<%=orders[i].total%>/-
+                                        </td>
+
+                                    </tr>
+                        </table>
+
+
+
+                    </div>
+
+
+                    <% }%>
+            </div>
+            <script>
+                // Get all checkboxes with id "checkBox"
+                var checkboxes = document.querySelectorAll('#checkBox');
+
+                // Loop through all checkboxes and add event listener
+                checkboxes.forEach(function (checkbox) {
+                    checkbox.addEventListener('keydown', function (event) {
+                        event.preventDefault();
+                    });
+                });
+
+
+
+
+
+                if ("<%=session.flag%>" == 1) {
+                    const errorModal = new bootstrap.Modal(
+                        document.getElementById("errorModal")
+                    );
+                    errorModal.show();
+                }
+                if ("<%=session.flag%>" == 2) {
+                    const message="Code matches with the generated code. The status of the extra item has been successfully updated from 'pending' to 'cleared'.";
+                    const errorModal = new bootstrap.Modal(
+                        document.getElementById("errorModal2")
+                    );
+                    document.getElementById('errorMessage').textContent = message;
+                    errorModal.show();
+                }
+                if ("<%=session.flag%>" == 3) {
+                    const message="The code entered is incorrect. Please double-check and try again.";
+                    const errorModal = new bootstrap.Modal(
+                        document.getElementById("errorModal2")
+                    );
+                    document.getElementById('errorMessage').textContent = message;
+                    errorModal.show();
+                }
+
+            </script>
+            </body>
+
+            </html>

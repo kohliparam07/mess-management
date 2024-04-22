@@ -1,0 +1,819 @@
+<%- include("../partials/head") %>
+<title>Mess Menu</title>
+<%- include("../partials/head2") %>
+  <%- include("navbar") %>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        font-family: 'Poppins', sans-serif;
+      }
+
+
+      .column {
+        float: center;
+        width: 33.33%;
+        padding: 0 10px;
+      }
+
+
+
+      /* Remove extra left and right margins, due to padding in columns */
+      .row {
+        margin: 0 -5px;
+      }
+
+      /* Clear floats after the columns */
+      .row:after {
+        content: "";
+        display: table;
+        clear: both;
+      }
+
+      /* Style the counter cards */
+      .menuCard {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        /* this adds the "menuCard" effect */
+        padding: 16px;
+        text-align: center;
+        background-color: #f1f1f1;
+      }
+
+      /* Responsive columns - one column layout (vertical) on small screens */
+      @media screen and (max-width: 600px) {
+        .column {
+          width: 100%;
+          display: block;
+          margin-bottom: 20px;
+        }
+      }
+
+      .body {
+
+        background-color: #deeeff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      .container {
+        margin: auto;
+        width: 100%;
+        background-color: white;
+        padding: 30px;
+        box-shadow: 0 2px 16px rgba(0, 0, 0, .1);
+        border-radius: 40px;
+      }
+
+      .tab_box {
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        border-bottom: 2px solid rgba(229, 229, 229);
+        position: relative;
+      }
+
+      .tab_box .tab_btn {
+        font-size: 18px;
+        font-weight: 600;
+        color: #919191;
+        background: none;
+        border: none;
+        padding: 18px;
+        cursor: pointer;
+      }
+
+      .content_box {
+        padding: 20px;
+      }
+
+      .content_box .content {
+        display: none;
+      }
+
+      .content_box .content.active {
+        display: block;
+      }
+
+      .content_box .content h2 {
+        margin-bottom: 10px;
+      }
+
+      .tab_box .tab_btn.active {
+        color: dodgerblue;
+      }
+
+
+      .card-title {
+        text-align: left;
+        padding-bottom: 10px;
+        word-break: break-all;
+      }
+      
+    </style>
+    </head>
+    </head>
+
+    <body>
+
+      <h2 style="text-align: center;color:#fff">Mess-Menu</h2>
+      <div class="container">
+        <div class="tab_box">
+          <button class="tab_btn">Monday</button>
+          <button class="tab_btn">Tuesday</button>
+          <button class="tab_btn">Wednesday</button>
+          <button class="tab_btn">Thursday</button>
+          <button class="tab_btn">Friday</button>
+          <button class="tab_btn">Saturday</button>
+          <button class="tab_btn">Sunday</button>
+          <div class="line"></div>
+        </div>
+        <div></div>
+        <div class="content_box">
+          <div class="content active">
+            <h2>Monday Menu</h2>
+            <div class="row">
+              <div class="column">
+                <div class="menuCard">
+                  <h3>
+                    Breakfast
+                  </h3>
+
+                  <h4 class="card-title" style="color:red;">Regular:</h4>
+
+
+                  <% for (let i=0; i < mob.length; i++) { %>
+
+                    <h4 class="card-title" >
+                      <%=mob[i].name%>
+                    </h4>
+
+                    <% }%>
+
+                      <h4 class="card-title" style="color:red;">Extras:</h4>
+
+                      <% for (let i=0; i < mobe.length; i++) { %>
+
+                        <h4 class="card-title" >
+                          <%=mobe[i].name%>
+                        </h4>
+                        <% }%>
+                </div>
+              </div>
+              <div class="column">
+                <div class="menuCard">
+                  <h3>Lunch</h3>
+
+                  <h4 class="card-title" style="color:red;">Regular:</h4>
+
+                  <% for (let i=0; i < mol.length; i++) { %>
+                    <h4 class="card-title" >
+                      <%=mol[i].name%>
+                    </h4>
+                    <% }%>
+
+                      <h4 class="card-title" style="color:red;">Extras:</h4>
+
+                      <% for (let i=0; i < mole.length; i++) { %>
+                        <h4 class="card-title" >
+
+                          <%=mole[i].name%>
+                        </h4>
+
+                        <% }%>
+
+                </div>
+              </div>
+              <div class="column">
+                <div class="menuCard">
+                  <h3>Dinner</h3>
+
+                  <h4 class="card-title" style="color:red;">Regular:</h4>
+
+
+                  <% for (let i=0; i < mod.length; i++) { %>
+                    <h4 class="card-title" >
+
+                      <%=mod[i].name%>
+                    </h4>
+
+                    <% }%>
+
+
+                      <h4 class="card-title" style="color:red;">Extras:</h4>
+
+                      <% for (let i=0; i < mode.length; i++) { %>
+                        <h4 class="card-title" >
+
+                          <%=mode[i].name%>
+                        </h4>
+                        <% }%>
+
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+          <div class="content">
+            <h2>Tuesday Menu</h2>
+
+            <div class="row">
+              <div class="column">
+                <div class="menuCard">
+                  <h3>
+                    Breakfast
+                  </h3>
+
+                  <h4 class="card-title" style="color:red;">Regular:</h4>
+
+                  <% for (let i=0; i < tub.length; i++) { %>
+                    <h4 class="card-title" >
+
+                      <%=tub[i].name%>
+                    </h4>
+
+                    <% }%>
+
+
+                      <h4 class="card-title" style="color:red;">Extras:</h4>
+
+                      <% for (let i=0; i < tube.length; i++) { %>
+                        <h4 class="card-title" >
+
+                          <%=tube[i].name%>
+                        </h4>
+
+                        <% }%>
+
+                </div>
+              </div>
+              <div class="column">
+                <div class="menuCard">
+                  <h3>Lunch</h3>
+
+                  <h4 class="card-title"style="color:red">Regular:</h4>
+
+
+                  <% for (let i=0; i < tul.length; i++) { %>
+                    <h4 class="card-title" >
+
+                      <%=tul[i].name%>
+
+                    </h4>
+                    <% }%>
+
+
+                      <h4 class="card-title" style="color:red">Extras:</h4>
+
+                      <% for (let i=0; i < tule.length; i++) { %>
+                        <h4 class="card-title" >
+
+                          <%=tule[i].name%>
+                        </h4>
+
+                        <% }%>
+
+                </div>
+              </div>
+              <div class="column">
+                <div class="menuCard">
+                  <h3>Dinner</h3>
+
+                  <h4 class="card-title"style="color:red">Regular:</h4>
+
+
+                  <% for (let i=0; i < tud.length; i++) { %>
+                    <h4 class="card-title" >
+
+                      <%=tud[i].name%>
+                    </h4>
+
+                    <% }%>
+
+
+                      <h4 class="card-title" style="color:red">Extras:</h4>
+
+                      <% for (let i=0; i < tude.length; i++) { %>
+                        <h4 class="card-title" >
+
+                          <%=tude[i].name%>
+                        </h4>
+
+                        <% }%>
+
+                </div>
+              </div>
+
+            </div>
+
+
+          </div>
+          <div class="content">
+            <h2>Wednesday Menu</h2>
+
+            <div class="row">
+              <div class="column">
+                <div class="menuCard">
+                  <h3>
+                    Breakfast
+                  </h3>
+
+                  <h4 class="card-title"style="color:red">Regular:</h4>
+
+                  <% for (let i=0; i < web.length; i++) { %>
+                    <h4 class="card-title" >
+
+                      <%=web[i].name%>
+                    </h4>
+
+                    <% }%>
+
+
+                      <h4 class="card-title" style="color:red">Extras:</h4>
+
+                      <% for (let i=0; i < webe.length; i++) { %>
+                        <h4 class="card-title" >
+
+                          <%=webe[i].name%>
+                        </h4>
+
+                        <% }%>
+
+                </div>
+              </div>
+              <div class="column">
+                <div class="menuCard">
+                  <h3>Lunch</h3>
+
+                  <h4 class="card-title"style="color:red">Regular:</h4>
+
+
+                  <% for (let i=0; i < wel.length; i++) { %>
+                    <h4 class="card-title" >
+                      <%=wel[i].name%>
+                    </h4>
+
+
+                    <% }%>
+
+
+                      <h4 class="card-title" style="color:red">Extras:</h4>
+
+                      <% for (let i=0; i < wele.length; i++) { %>
+                        <h4 class="card-title" >
+
+                          <%=wele[i].name%>
+                        </h4>
+
+                        <% }%>
+
+                </div>
+              </div>
+              <div class="column">
+                <div class="menuCard">
+                  <h3>Dinner</h3>
+
+                  <h4 class="card-title"style="color:red">Regular:</h4>
+
+
+                  <% for (let i=0; i < wed.length; i++) { %>
+                    <h4 class="card-title" >
+
+                      <%=wed[i].name%>
+                    </h4>
+
+                    <% }%>
+
+
+                      <h4 class="card-title" style="color:red">Extras:</h4>
+
+                      <% for (let i=0; i < wede.length; i++) { %>
+                        <h4 class="card-title" >
+
+                          <%=wede[i].name%>
+                        </h4>
+
+                        <% }%>
+
+                </div>
+              </div>
+
+            </div>
+
+
+          </div>
+          <div class="content">
+            <h2>Thursday Menu</h2>
+
+            <div class="row">
+              <div class="column">
+                <div class="menuCard">
+                  <h3>
+                    Breakfast
+                  </h3>
+
+                  <h4 class="card-title"style="color:red">Regular:</h4>
+
+                  <% for (let i=0; i < thb.length; i++) { %>
+                    <h4 class="card-title" >
+
+                      <%=thb[i].name%>
+                    </h4>
+
+                    <% }%>
+
+
+                      <h4 class="card-title" style="color:red">Extras:</h4>
+
+                      <% for (let i=0; i < thbe.length; i++) { %>
+                        <h4 class="card-title" >
+
+                          <%=thbe[i].name%>
+
+                        </h4>
+                        <% }%>
+
+                </div>
+              </div>
+              <div class="column">
+                <div class="menuCard">
+                  <h3>Lunch</h3>
+
+                  <h4 class="card-title"style="color:red">Regular:</h4>
+
+
+                  <% for (let i=0; i < thl.length; i++) { %>
+                    <h4 class="card-title" >
+
+                      <%=thl[i].name%>
+                    </h4>
+
+                    <% }%>
+
+
+                      <h4 class="card-title" style="color:red">Extras:</h4>
+
+                      <% for (let i=0; i < thle.length; i++) { %>
+                        <h4 class="card-title" >
+
+                          <%=thle[i].name%>
+
+                        </h4>
+                        <% }%>
+
+                </div>
+              </div>
+              <div class="column">
+                <div class="menuCard">
+                  <h3>Dinner</h3>
+
+                  <h4 class="card-title"style="color:red">Regular:</h4>
+
+
+                  <% for (let i=0; i < thd.length; i++) { %>
+                    <h4 class="card-title" >
+
+                      <%=thd[i].name%>
+
+                    </h4>
+                    <% }%>
+
+
+                      <h4 class="card-title" style="color:red">Extras:</h4>
+
+                      <% for (let i=0; i < thde.length; i++) { %>
+                        <h4 class="card-title" >
+
+                          <%=thde[i].name%>
+                        </h4>
+
+                        <% }%>
+
+                </div>
+              </div>
+
+            </div>
+
+
+          </div>
+          <div class="content">
+            <h2>Friday Menu</h2>
+
+            <div class="row">
+              <div class="column">
+                <div class="menuCard">
+                  <h3>
+                    Breakfast
+                  </h3>
+
+                  <h4 class="card-title"style="color:red">Regular:</h4>
+
+                  <% for (let i=0; i < frb.length; i++) { %>
+                    <h4 class="card-title" >
+
+                      <%=frb[i].name%>
+
+                    </h4>
+                    <% }%>
+
+
+                      <h4 class="card-title" style="color:red">Extras:</h4>
+
+                      <% for (let i=0; i < frbe.length; i++) { %>
+                        <h4 class="card-title" >
+
+                          <%=frbe[i].name%>
+                        </h4>
+
+                        <% }%>
+
+                </div>
+              </div>
+              <div class="column">
+                <div class="menuCard">
+                  <h3>Lunch</h3>
+
+                  <h4 class="card-title"style="color:red">Regular:</h4>
+
+
+                  <% for (let i=0; i < frl.length; i++) { %>
+                    <h4 class="card-title" >
+
+                      <%=frl[i].name%>
+
+                    </h4>
+                    <% }%>
+
+
+                      <h4 class="card-title" style="color:red">Extras:</h4>
+
+                      <% for (let i=0; i < frle.length; i++) { %>
+                        <h4 class="card-title" >
+
+                          <%=frle[i].name%>
+                        </h4>
+
+                        <% }%>
+
+                </div>
+              </div>
+              <div class="column">
+                <div class="menuCard">
+                  <h3>Dinner</h3>
+
+                  <h4 class="card-title"style="color:red">Regular:</h4>
+
+
+                  <% for (let i=0; i < frd.length; i++) { %>
+                    <h4 class="card-title" >
+
+                      <%=frd[i].name%>
+
+                    </h4>
+                    <% }%>
+
+
+                      <h4 class="card-title" style="color:red">Extras:</h4>
+
+                      <% for (let i=0; i < frde.length; i++) { %>
+                        <h4 class="card-title" >
+
+                          <%=frde[i].name%>
+                        </h4>
+
+                        <% }%>
+
+                </div>
+              </div>
+
+            </div>
+
+
+          </div>
+          <div class="content">
+            <h2>Saturday Menu</h2>
+
+            <div class="row">
+              <div class="column">
+                <div class="menuCard">
+                  <h3>
+                    Breakfast
+                  </h3>
+
+                  <h4 class="card-title"style="color:red">Regular:</h4>
+
+                  <% for (let i=0; i < sab.length; i++) { %>
+                    <h4 class="card-title" >
+
+                      <%=sab[i].name%>
+                    </h4>
+
+                    <% }%>
+
+
+                      <h4 class="card-title" style="color:red">Extras:</h4>
+
+                      <% for (let i=0; i < sabe.length; i++) { %>
+                        <h4 class="card-title" >
+
+                          <%=sabe[i].name%>
+                        </h4>
+
+                        <% }%>
+
+                </div>
+              </div>
+              <div class="column">
+                <div class="menuCard">
+                  <h3>Lunch</h3>
+
+                  <h4 class="card-title"style="color:red">Regular:</h4>
+
+
+                  <% for (let i=0; i < sal.length; i++) { %>
+                    <h4 class="card-title" >
+
+                      <%=sal[i].name%>
+
+                    </h4>
+                    <% }%>
+
+
+                      <h4 class="card-title" style="color:red">Extras:</h4>
+
+                      <% for (let i=0; i < sale.length; i++) { %>
+                        <h4 class="card-title" >
+
+                          <%=sale[i].name%>
+                        </h4>
+
+                        <% }%>
+
+                </div>
+              </div>
+              <div class="column">
+                <div class="menuCard">
+                  <h3>Dinner</h3>
+
+                  <h4 class="card-title"style="color:red">Regular:
+
+                  </h4>
+
+                  <% for (let i=0; i < sad.length; i++) { %>
+                    <h4 class="card-title" >
+
+                      <%=sad[i].name%>
+
+                    </h4>
+                    <% }%>
+
+
+                      <h4 class="card-title" style="color:red">Extras:</h4>
+
+                      <% for (let i=0; i < sade.length; i++) { %>
+                        <h4 class="card-title" >
+
+                          <%=sade[i].name%>
+                        </h4>
+
+                        <% }%>
+
+                </div>
+              </div>
+
+            </div>
+
+
+          </div>
+          <div class="content">
+            <h2>Sunday Menu</h2>
+
+            <div class="row">
+              <div class="column">
+                <div class="menuCard">
+                  <h3>
+                    Breakfast
+                  </h3>
+
+                  <h4 class="card-title" style="color:red">
+
+                    Regular:</h4>
+                  <% for (let i=0; i < sub.length; i++) { %>
+                    <h4 class="card-title" >
+
+                      <%=sub[i].name%>
+                    </h4>
+
+
+                    <% }%>
+
+
+                      <h4 class="card-title" style="color:red">Extras:</h4>
+
+                      <% for (let i=0; i < sube.length; i++) { %>
+                        <h4 class="card-title" >
+
+                          <%=sube[i].name%>
+                        </h4>
+
+
+                        <% }%>
+
+                </div>
+              </div>
+              <div class="column">
+                <div class="menuCard">
+                  <h3>Lunch</h3>
+
+                  <h4 class="card-title"  style="color:red" >
+                  Regular:</h4>
+
+
+                  <% for (let i=0; i < sul.length; i++) { %>
+                    <h4 class="card-title" >
+
+                      <%=sul[i].name%>
+                    </h4>
+
+
+                    <% }%>
+
+
+                      <h4 class="card-title" style="color:red">Extras:</h4>
+
+                      <% for (let i=0; i < sule.length; i++) { %>
+                        <h4 class="card-title" >
+
+                          <%=sule[i].name%>
+                        </h4>
+
+
+                        <% }%>
+
+                </div>
+              </div>
+              <div class="column">
+                <div class="menuCard">
+                  <h3>Dinner</h3>
+
+                  <h4 class="card-title" style="color:red">
+
+                    Regular:</h4>
+                  <% for (let i=0; i < sud.length; i++) { %>
+                    <h4 class="card-title" >
+
+                      <%=sud[i].name%>
+                    </h4>
+
+                    <% }%>
+
+
+
+
+                      <h4 class="card-title" style="color:red">Extras:</h4>
+
+                      <% for (let i=0; i < sude.length; i++) { %>
+                        <h4 class="card-title" >
+
+                          <%=sude[i].name%>
+                        </h4>
+
+
+
+
+                        <% }%>
+                </div>
+
+
+              </div>
+            </div>
+
+          </div>
+
+
+        </div>
+
+
+        <script>
+          const tabs = document.querySelectorAll('.tab_btn');
+          const all_content = document.querySelectorAll('.content');
+          tabs.forEach((tab, index) => {
+            tab.addEventListener('click', () => {
+              tabs.forEach(tab => { tab.classList.remove('active') });
+              tab.classList.add('active');
+
+              all_content.forEach(context => { context.classList.remove('active') })
+              all_content[index].classList.add('active');
+            })
+
+
+          })
+        </script>
+
+    </body>
+
+    </html>
